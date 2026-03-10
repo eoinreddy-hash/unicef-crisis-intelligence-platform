@@ -1,0 +1,34 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#EEF4F9"/>
+  <rect x="36" y="36" width="1128" height="558" rx="36" fill="url(#paint0_linear)"/>
+  <rect x="72" y="72" width="1056" height="486" rx="28" fill="rgba(255,255,255,0.9)"/>
+  <rect x="104" y="112" width="240" height="46" rx="23" fill="rgba(28,171,226,0.12)"/>
+  <text x="130" y="142" fill="#1CABE2" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4">AI-POWERED CRISIS MONITORING</text>
+  <text x="104" y="238" fill="#0F2741" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="700">UNICEF Crisis</text>
+  <text x="104" y="308" fill="#0F2741" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="700">Intelligence Platform</text>
+  <text x="104" y="370" fill="#5F738B" font-family="Inter, Arial, sans-serif" font-size="28">Real-time humanitarian intelligence for faster response.</text>
+  <rect x="104" y="426" width="248" height="62" rx="24" fill="#1CABE2"/>
+  <text x="142" y="465" fill="white" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Launch Dashboard</text>
+  <rect x="664" y="116" width="392" height="326" rx="28" fill="url(#paint1_linear)" stroke="rgba(28,171,226,0.14)"/>
+  <path d="M742 235L782 208L847 199L899 225L893 271L829 291L799 345L756 336L711 292L719 251L742 235Z" fill="#1CABE2" fill-opacity="0.65"/>
+  <path d="M890 193L953 168L1008 181L1037 212L1028 253L983 260L951 294L913 281L888 243L890 193Z" fill="#1CABE2" fill-opacity="0.82"/>
+  <circle cx="904" cy="226" r="11" fill="#F25F5C"/>
+  <circle cx="799" cy="273" r="10" fill="#FF8A3D"/>
+  <circle cx="956" cy="315" r="9" fill="#F5C04E"/>
+  <rect x="664" y="462" width="186" height="68" rx="22" fill="white"/>
+  <rect x="870" y="462" width="186" height="68" rx="22" fill="white"/>
+  <text x="692" y="492" fill="#5F738B" font-family="Inter, Arial, sans-serif" font-size="16">ACTIVE CRISIS ZONES</text>
+  <text x="692" y="520" fill="#0F2741" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">24</text>
+  <text x="898" y="492" fill="#5F738B" font-family="Inter, Arial, sans-serif" font-size="16">AI ALERTS TRIAGED</text>
+  <text x="898" y="520" fill="#0F2741" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">382</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="36" y1="36" x2="1164" y2="594" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFE"/>
+      <stop offset="1" stop-color="#E8F2F8"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="664" y1="116" x2="1056" y2="442" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7FCFE"/>
+      <stop offset="1" stop-color="#EDF7FB"/>
+    </linearGradient>
+  </defs>
+</svg>
