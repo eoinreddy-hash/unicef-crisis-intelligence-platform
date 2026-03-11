@@ -85,3 +85,38 @@ export function PulseIcon(props: IconProps) {
     </>
   );
 }
+
+export function AlertIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <path d="M12 4 21 20H3L12 4Z" />
+      <path d="M12 9v4" />
+      <circle cx="12" cy="16.5" r=".8" fill="currentColor" stroke="none" />
+    </>
+  );
+}
+
+export function ChildIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <circle cx="12" cy="7.5" r="2.5" />
+      <path d="M8.5 21v-5l-2-3 2-3.5h7L17.5 13l-2 3v5" />
+      <path d="M12 10v4" />
+    </>
+  );
+}
+
+export function PresentationIcon(props: IconProps) {
+  return base(
+    props,
+    <>
+      <rect x="4" y="4" width="16" height="11" rx="2" />
+      <path d="M12 15v5" />
+      <path d="M9 20h6" />
+      <path d="M8 8h8" />
+      <path d="M8 11h5" />
+    </>
+  );
+}

@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { AIAssistantPanel } from "@/components/ai-assistant-panel";
 import { ForecastBandChart } from "@/components/analytics-charts";
+import { ChildImpactPanel } from "@/components/child-impact-panel";
 import { CrisisMap } from "@/components/crisis-map";
 import { IncidentFeed } from "@/components/incident-feed";
+import { LiveSignalsPanel } from "@/components/live-signals-panel";
 import { NeedsChart } from "@/components/needs-chart";
+import { PresentationIcon } from "@/components/icons";
 import { DashboardView, Sidebar } from "@/components/sidebar";
 import { crisisStats, regionalSnapshots, reportCards, reportTimeline } from "@/lib/mock-data";
 
@@ -45,11 +48,15 @@ function SectionHeading({
 function DashboardHeader({
   title,
   description,
-  badge
+  badge,
+  briefingMode = false,
+  onToggleBriefing
 }: {
   title: string;
   description: string;
   badge: string;
+  briefingMode?: boolean;
+  onToggleBriefing?: () => void;
 }) {
   return (
     <section className="panel overflow-hidden px-6 py-7 lg:px-8 lg:py-8">
@@ -65,6 +72,20 @@ function DashboardHeader({
         </div>
 
         <div className="flex flex-wrap gap-3">
+          {onToggleBriefing ? (
+            <button
+              type="button"
+              onClick={onToggleBriefing}
+              className={`soft-ring inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition duration-300 ${
+                briefingMode
+                  ? "bg-unicef-blue text-white"
+                  : "bg-white/92 text-unicef-ink/70 hover:-translate-y-0.5"
+              }`}
+            >
+              <PresentationIcon className="h-4 w-4" />
+              {briefingMode ? "Briefing mode on" : "Enter briefing mode"}
+            </button>
+          ) : null}
           <div className="soft-ring rounded-full bg-white/92 px-4 py-2 text-sm text-unicef-ink/70">
             Last sync 12:04 UTC
           </div>
@@ -89,77 +110,112 @@ function DashboardHeader({
   );
 }
 
-function OverviewView() {
+function OverviewView({ briefingMode, onToggleBriefing }: { briefingMode: boolean; onToggleBriefing: () => void }) {
   return (
     <>
       <DashboardHeader
         title="Real-time humanitarian intelligence for faster, more confident response decisions."
         description="AI-assisted monitoring surfaces the most urgent crises, summarizes incoming field signals, and highlights operational needs across conflict, climate, health, and displacement events."
         badge="Systems nominal"
+        briefingMode={briefingMode}
+        onToggleBriefing={onToggleBriefing}
       />
 
-      <section className="grid gap-5 xl:grid-cols-[1.42fr_0.92fr] xl:gap-6">
-        <div className="panel p-6">
-          <SectionHeading kicker="Global Crisis Map" title="AI-prioritized crisis geography" badge="Severity-weighted markers" />
-          <CrisisMap condensed />
-        </div>
+      <LiveSignalsPanel />
+      <ChildImpactPanel />
 
-        <div className="panel p-6">
-          <SectionHeading kicker="Situation Summary" title="Latest developments in the region" />
+      <section className="grid gap-5 xl:grid-cols-[1.08fr_0.92fr] xl:gap-6">
+        <AIAssistantPanel />
 
-          <div className="card-subtle p-6">
-            <p className="text-sm leading-7 text-unicef-ink/75">
-              Highest-severity alerts remain concentrated in Sudan and Gaza, where access constraints and population
-              movement are accelerating humanitarian needs. Eastern DRC shows rising outbreak risk near large
-              displacement sites, while Bangladesh flood exposure is increasing pressure on WASH and shelter systems.
-            </p>
+        <div className="space-y-5 xl:space-y-6">
+          <div className="panel p-6">
+            <SectionHeading kicker="Forward Outlook" title="Projected humanitarian pressure" badge="AI forecast" />
+            <ForecastBandChart />
           </div>
 
-          <div className="mt-5 space-y-3">
-            {regionalSnapshots.map((snapshot) => (
-              <div key={snapshot.region} className="card-subtle p-4 transition duration-300 hover:-translate-y-0.5">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <div className="text-base font-semibold text-unicef-ink">{snapshot.region}</div>
-                    <div className="mt-1 text-sm text-unicef-ink/56">{snapshot.trend}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-base font-semibold text-unicef-ink">{snapshot.risk}/100</div>
-                    <div className="mt-1 text-sm text-unicef-ink/56">{snapshot.people} people affected</div>
+          <div className="panel p-6">
+            <SectionHeading kicker="Command Notes" title="What leadership should watch next" />
+            <div className="space-y-3">
+              {[
+                "Sudan and Gaza remain the dominant drivers of leadership attention over the next 24 hours.",
+                "Projected pressure is rising faster than access in the highest-severity contexts.",
+                "WASH and child protection remain the most likely categories to need rapid escalation."
+              ].map((note) => (
+                <div key={note} className="card-subtle p-4 text-sm leading-6 text-unicef-ink/72">
+                  {note}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {!briefingMode ? (
+        <section className="grid gap-5 xl:grid-cols-[1.42fr_0.92fr] xl:gap-6">
+          <div className="panel p-6">
+            <SectionHeading kicker="Global Crisis Map" title="AI-prioritized crisis geography" badge="Severity-weighted markers" />
+            <CrisisMap condensed />
+          </div>
+
+          <div className="panel p-6">
+            <SectionHeading kicker="Situation Summary" title="Latest developments in the region" />
+
+            <div className="card-subtle p-6">
+              <p className="text-sm leading-7 text-unicef-ink/75">
+                Highest-severity alerts remain concentrated in Sudan and Gaza, where access constraints and population
+                movement are accelerating humanitarian needs. Eastern DRC shows rising outbreak risk near large
+                displacement sites, while Bangladesh flood exposure is increasing pressure on WASH and shelter systems.
+              </p>
+            </div>
+
+            <div className="mt-5 space-y-3">
+              {regionalSnapshots.map((snapshot) => (
+                <div key={snapshot.region} className="card-subtle p-4 transition duration-300 hover:-translate-y-0.5">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <div className="text-base font-semibold text-unicef-ink">{snapshot.region}</div>
+                      <div className="mt-1 text-sm text-unicef-ink/56">{snapshot.trend}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-base font-semibold text-unicef-ink">{snapshot.risk}/100</div>
+                      <div className="mt-1 text-sm text-unicef-ink/56">{snapshot.people} people affected</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section className="grid gap-5 xl:grid-cols-[1.05fr_0.95fr] xl:gap-6">
-        <IncidentFeed />
-        <NeedsChart />
-      </section>
-
-      <section className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr] xl:gap-6">
-        <div className="panel p-6">
-          <SectionHeading kicker="Forward Outlook" title="Projected humanitarian pressure" badge="AI forecast" />
-          <ForecastBandChart />
-        </div>
-
-        <div className="panel p-6">
-          <SectionHeading kicker="Command Notes" title="What leadership should watch next" />
-          <div className="space-y-3">
-            {[
-              "Sudan and Gaza remain the dominant drivers of leadership attention over the next 24 hours.",
-              "Projected pressure is rising faster than access in the highest-severity contexts.",
-              "WASH and child protection remain the most likely categories to need rapid escalation."
-            ].map((note) => (
-              <div key={note} className="card-subtle p-4 text-sm leading-6 text-unicef-ink/72">
-                {note}
-              </div>
-            ))}
+        </section>
+      ) : (
+        <section className="grid gap-5 xl:grid-cols-[1.18fr_0.82fr] xl:gap-6">
+          <div className="panel p-6">
+            <SectionHeading kicker="Executive Map" title="Highest-priority crisis contexts" badge="Leadership view" />
+            <CrisisMap condensed />
           </div>
-        </div>
-      </section>
+
+          <div className="panel p-6">
+            <SectionHeading kicker="Executive Summary" title="What changed in the last briefing cycle" />
+            <div className="space-y-3">
+              {[
+                "Sudan and Gaza remain the two highest child-impact contexts across the monitored portfolio.",
+                "Social signals are directionally useful, but verified humanitarian sources remain the dominant scoring inputs.",
+                "Immediate leadership attention should focus on access constraints, WASH deterioration, and protection capacity."
+              ].map((item) => (
+                <div key={item} className="card-subtle p-4 text-sm leading-6 text-unicef-ink/72">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {!briefingMode ? (
+        <section className="grid gap-5 xl:grid-cols-[1.05fr_0.95fr] xl:gap-6">
+          <IncidentFeed />
+          <NeedsChart />
+        </section>
+      ) : null}
     </>
   );
 }
@@ -445,6 +501,7 @@ function ReportsView() {
 
 export function DashboardShell() {
   const [activeView, setActiveView] = useState<DashboardView>("Overview");
+  const [briefingMode, setBriefingMode] = useState(false);
 
   return (
     <div className="dashboard-shell relative min-h-screen px-4 py-5 lg:px-6 lg:py-6">
@@ -452,7 +509,12 @@ export function DashboardShell() {
         <Sidebar activeView={activeView} onSelect={setActiveView} />
 
         <main className="space-y-5 xl:space-y-6">
-          {activeView === "Overview" ? <OverviewView /> : null}
+          {activeView === "Overview" ? (
+            <OverviewView
+              briefingMode={briefingMode}
+              onToggleBriefing={() => setBriefingMode((current) => !current)}
+            />
+          ) : null}
           {activeView === "Active Crises" ? <ActiveCrisesView /> : null}
           {activeView === "Incident Feed" ? <IncidentFeedView /> : null}
           {activeView === "Humanitarian Needs" ? <NeedsView /> : null}

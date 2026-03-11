@@ -198,6 +198,79 @@ export const assistantInsights = [
   { label: "Next briefing", value: "14 min", detail: "Auto-generated executive summary" }
 ] as const;
 
+export const liveSignals = [
+  {
+    source: "ReliefWeb",
+    region: "Sudan",
+    type: "Conflict escalation",
+    time: "2m ago",
+    confidence: 96,
+    childImpact: "Very high",
+    note: "Urban displacement reports indicate immediate protection and trauma care needs for children."
+  },
+  {
+    source: "GDACS",
+    region: "Bangladesh",
+    type: "Flood alert",
+    time: "8m ago",
+    confidence: 91,
+    childImpact: "High",
+    note: "School disruption and contaminated water points suggest rising WASH and disease exposure risk."
+  },
+  {
+    source: "X Monitor",
+    region: "Gaza",
+    type: "Displacement signal",
+    time: "13m ago",
+    confidence: 74,
+    childImpact: "Very high",
+    note: "Multiple corroborated social posts indicate shelter pressure and urgent child protection concerns."
+  },
+  {
+    source: "Partner Feed",
+    region: "DRC",
+    type: "Outbreak cluster",
+    time: "19m ago",
+    confidence: 88,
+    childImpact: "High",
+    note: "Measles-related field updates point to immunization gaps near displacement camps."
+  }
+] as const;
+
+export const childImpactProfiles = [
+  {
+    region: "Sudan",
+    score: 93,
+    affectedChildren: "4.1M",
+    drivers: ["Displacement", "Trauma exposure", "Health service disruption"],
+    immediateNeeds: ["Child protection", "Safe water", "Primary care"],
+    confidence: 0.94
+  },
+  {
+    region: "Gaza",
+    score: 95,
+    affectedChildren: "1.0M",
+    drivers: ["Shelter saturation", "Acute stress", "Restricted access"],
+    immediateNeeds: ["Psychosocial support", "Shelter", "Trauma supplies"],
+    confidence: 0.92
+  },
+  {
+    region: "DRC",
+    score: 82,
+    affectedChildren: "2.7M",
+    drivers: ["Outbreak risk", "Nutrition strain", "Displacement"],
+    immediateNeeds: ["Vaccination", "Nutrition", "WASH"],
+    confidence: 0.87
+  }
+] as const;
+
+export const provenanceModel = [
+  { source: "ReliefWeb", weight: 0.34, status: "Verified" },
+  { source: "UN partner sitreps", weight: 0.27, status: "Verified" },
+  { source: "GDACS / hazard feeds", weight: 0.22, status: "Verified" },
+  { source: "X social signals", weight: 0.17, status: "Corroborated" }
+] as const;
+
 export const reportCards = [
   { title: "Daily Executive Brief", detail: "Auto-generated 06:00 UTC", status: "Ready" },
   { title: "Critical Incident Digest", detail: "Last updated 12 minutes ago", status: "Live" },
